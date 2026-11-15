@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz | Understanding Information Technology</title>
+  <!-- Link to the single shared stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Quiz logic (written in a later step). defer waits until the HTML is loaded. -->
+  <script src="js/quiz.js" defer></script>
+</head>
+<body>
+
+<!-- Site header -->
+<header>
+  <h1>Understanding Information Technology</h1>
+</header>
+
+<!-- Main menu: identical on every page (Quiz link added) -->
+<nav>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="what-is-it.html">What Is IT?</a></li>
+    <li><a href="related-fields.html">Related Fields</a></li>
+    <li><a href="concepts.html">Key Concepts</a></li>
+    <li><a href="quiz.html" class="active" aria-current="page">Quiz</a></li>
+    <li><a href="references.html">References</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <h2>Self-Assessment Quiz</h2>
+  <p>
+    Test what you learned on this site. There are 10 questions and you have
+    10 minutes. The quiz submits automatically when time runs out.
+  </p>
+
+  <!-- Timer: JavaScript will update this text every second -->
+  <div id="timer" aria-live="off">Time remaining: <span id="time-left">10:00</span></div>
+
+  <!-- The quiz form. novalidate lets our JavaScript handle checking instead of the browser. -->
+  <form id="quiz-form" novalidate>
+
+    <!-- Q1: fill-in-the-blank (text input) -->
+    <fieldset class="question" id="question-1">
+      <legend>Question 1</legend>
+      <p>
+        <label for="q1">The networks, servers, hardware, and software an organization
+        depends on are called its IT</label>
+        <input type="text" id="q1" name="q1" autocomplete="off"> .
+      </p>
+    </fieldset>
+
+    <!-- Q2: fill-in-the-blank -->
+    <fieldset class="question" id="question-2">
+      <legend>Question 2</legend>
+      <p>
+        <label for="q2">Installing and setting up software or systems so users can use
+        them is called</label>
+        <input type="text" id="q2" name="q2" autocomplete="off"> .
+      </p>
+    </fieldset>
+
+    <!-- Q3: fill-in-the-blank -->
+    <fieldset class="question" id="question-3">
+      <legend>Question 3</legend>
+      <p>
+        <label for="q3">ACM stands for the Association for Computing</label>
+        <input type="text" id="q3" name="q3" autocomplete="off"> .
+      </p>
+    </fieldset>
+
+    <!-- Q4: multiple choice (radio buttons share one name so only one can be picked) -->
+    <fieldset class="question" id="question-4">
+      <legend>Question 4</legend>
+      <p>Which field focuses mainly on the principles and theory of computation?</p>
+      <label><input type="radio" name="q4" value="a"> Information Technology</label>
+      <label><input type="radio" name="q4" value="b"> Computer Science</label>
+      <label><input type="radio" name="q4" value="c"> Software Engineering</label>
+      <label><input type="radio" name="q4" value="d"> Computer Engineering</label>
+    </fieldset>
+
+    <!-- Q5: multiple choice -->
+    <fieldset class="question" id="question-5">
+      <legend>Question 5</legend>
+      <p>Which field is most connected to the relationship between hardware and software?</p>
+      <label><input type="radio" name="q5" value="a"> Data Science</label>
+      <label><input type="radio" name="q5" value="b"> Computer Science</label>
+      <label><input type="radio" name="q5" value="c"> Computer Engineering</label>
+      <label><input type="radio" name="q5" value="d"> Information Technology</label>
+    </fieldset>
+
+    <!-- Q6: multiple choice -->
+    <fieldset class="question" id="question-6">
+      <legend>Question 6</legend>
+      <p>A data scientist would most likely be responsible for which task?</p>
+      <label><input type="radio" name="q6" value="a"> Analyzing stored data to predict customer behavior</label>
+      <label><input type="radio" name="q6" value="b"> Configuring employee computers</label>
+      <label><input type="radio" name="q6" value="c"> Designing a processor</label>
+      <label><input type="radio" name="q6" value="d"> Deploying an application to users</label>
+    </fieldset>
+
+    <!-- Q7: multiple choice -->
+    <fieldset class="question" id="question-7">
+      <legend>Question 7</legend>
+      <p>Which statement best describes the main focus of Information Technology?</p>
+      <label><input type="radio" name="q7" value="a"> Studying the mathematical theory of computation</label>
+      <label><input type="radio" name="q7" value="b"> Designing processors and embedded hardware</label>
+      <label><input type="radio" name="q7" value="c"> Implementing, managing, and supporting technology in real-world environments</label>
+      <label><input type="radio" name="q7" value="d"> Building large applications from requirements through testing</label>
+    </fieldset>
+
+    <!-- Q8: multi-select (checkboxes share a name but each can be checked independently) -->
+    <fieldset class="question" id="question-8">
+      <legend>Question 8</legend>
+      <p>Which of these are areas IT professionals work in? (Select all that apply.)</p>
+      <label><input type="checkbox" name="q8" value="a"> Networks</label>
+      <label><input type="checkbox" name="q8" value="b"> Cybersecurity</label>
+      <label><input type="checkbox" name="q8" value="c"> Designing processors</label>
+      <label><input type="checkbox" name="q8" value="d"> Databases</label>
+    </fieldset>
+
+    <!-- Q9: multi-select -->
+    <fieldset class="question" id="question-9">
+      <legend>Question 9</legend>
+      <p>Which tasks are typical of an IT professional? (Select all that apply.)</p>
+      <label><input type="checkbox" name="q9" value="a"> Troubleshooting hardware and software problems</label>
+      <label><input type="checkbox" name="q9" value="b"> Developing a new algorithm to speed up a computation</label>
+      <label><input type="checkbox" name="q9" value="c"> Configuring computers for users</label>
+      <label><input type="checkbox" name="q9" value="d"> Designing embedded hardware</label>
+    </fieldset>
+
+    <!-- Q10: true/false (radio buttons) -->
+    <fieldset class="question" id="question-10">
+      <legend>Question 10</legend>
+      <p>True or false: Computer Science, Computer Engineering, Software Engineering,
+      Data Science, and IT are fully separate fields that do not work together.</p>
+      <label><input type="radio" name="q10" value="true"> True</label>
+      <label><input type="radio" name="q10" value="false"> False</label>
+    </fieldset>
+
+    <!-- Form buttons -->
+    <div class="quiz-buttons">
+      <button type="submit" id="submit-btn">Submit Quiz</button>
+      <button type="button" id="reset-btn">Reset</button>
+    </div>
+
+  </form>
+
+  <!-- Results area: hidden until the quiz is submitted. JavaScript fills in the spans and list. -->
+  <section id="results" hidden>
+    <h2>Your Results</h2>
+    <p id="result-status"></p>
+    <p>Total score: <span id="total-score"></span></p>
+    <p>Time spent: <span id="time-spent"></span></p>
+    <h3>Question Breakdown</h3>
+    <div id="results-list"></div>
+    <button type="button" id="retake-btn">Retake Quiz</button>
+  </section>
+
+</main>
+
+<!-- Required class project note -->
+<footer>
+  <p>This website is a class project for IT 3203.
+    <a href="https://ksuweb.github.io/IT3203/">Class website</a></p>
+</footer>
+
+</body>
+</html>
