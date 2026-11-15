@@ -268,4 +268,72 @@ img {
 /* Primary actions (Submit, Retake): solid blue. */
 #submit-btn,
 #retake-btn {
-  background-color:
+  background-color: #2c5282;
+  color: white;
+  border: 2px solid #2c5282;
+}
+
+#submit-btn:hover,
+#retake-btn:hover {
+  background-color: #1f3a5f;
+}
+
+/* Secondary action (Reset): outlined so it looks less prominent than Submit. */
+#reset-btn {
+  background-color: white;
+  color: #2c5282;
+  border: 2px solid #2c5282;
+}
+
+#reset-btn:hover {
+  background-color: #e2e8f0;
+}
+
+/* Disabled buttons (Submit after grading): grayed out. */
+button:disabled {
+  background-color: #cbd5e0;
+  border-color: #cbd5e0;
+  color: #718096;
+  cursor: not-allowed;
+}
+
+/* --- Results --- */
+
+/* Spacing above so the results separate from the form. */
+#results {
+  margin-top: 2rem;
+}
+
+/* Green for correct/pass, red for incorrect/fail. Color is paired with text so the meaning doesn't depend on color alone. */
+.correct { color: #276749; }
+.incorrect { color: #c53030; }
+
+/* PASS/FAIL banner text. */
+#result-status {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+/* One card per question in the breakdown, with a thick left border colored by result. */
+.result-item {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-left-width: 6px;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+
+.result-item.correct { border-left-color: #38a169; }
+.result-item.incorrect { border-left-color: #e53e3e; }
+
+
+/* ========== 9. RESPONSIVE ADJUSTMENTS ========== */
+
+/* Small screens: tighter link padding so more links fit per row before wrapping. */
+@media (max-width: 600px) {
+  nav a {
+    display: block;
+    padding: 0.4rem 0.75rem;
+  }
+}
