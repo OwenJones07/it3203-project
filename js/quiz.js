@@ -4,6 +4,9 @@
 // The quiz is limited to 10 minutes, stored in seconds.
 const TIME_LIMIT_SECONDS = 10 * 60;
 
+// Percent needed to pass.
+const PASS_PERCENT = 70;
+
 /* ---------- Answer key ----------
    One object per question.
    type:        "text" (fill-in-the-blank), "single" (radio), or "multi" (checkboxes)
@@ -66,6 +69,11 @@ const questions = [
 /* ---------- Page elements ---------- */
 const form = document.getElementById("quiz-form");
 const timeLeftEl = document.getElementById("time-left");
+const resultsSection = document.getElementById("results");
+const resultStatusEl = document.getElementById("result-status");
+const totalScoreEl = document.getElementById("total-score");
+const timeSpentEl = document.getElementById("time-spent");
+const resultsListEl = document.getElementById("results-list");
 
 /* ---------- Timer ---------- */
 const startTime = Date.now();   // when the page loaded, used to measure time spent
@@ -83,14 +91,8 @@ function formatTime(totalSeconds) {
 function tick() {
   const elapsed = Math.floor((Date.now() - startTime) / 1000);
   const remaining = Math.max(TIME_LIMIT_SECONDS - elapsed, 0);
-  // Percent needed to pass.
-  const PASS_PERCENT = 70;
   timeLeftEl.textContent = formatTime(remaining);
-  const resultsSection = document.getElementById("results");
-  const resultStatusEl = document.getElementById("result-status");
-  const totalScoreEl = document.getElementById("total-score");
-  const timeSpentEl = document.getElementById("time-spent");
-  const resultsListEl = document.getElementById("results-list");
+
   if (remaining === 0) {
     submitQuiz();
   }
