@@ -76,7 +76,7 @@ const timeSpentEl = document.getElementById("time-spent");
 const resultsListEl = document.getElementById("results-list");
 
 /* ---------- Timer ---------- */
-const startTime = Date.now();   // when the page loaded, used to measure time spent
+let startTime = Date.now();     // when the quiz started, used to measure time spent (reset on retake)
 let timerId = null;             // holds the interval so we can stop it later
 let submitted = false;          // prevents grading twice (manual submit + timer running out)
 
@@ -201,3 +201,35 @@ form.addEventListener("submit", function (event) {
   event.preventDefault();       // stop the browser from reloading the page
   submitQuiz();
 });
+
+/* ---------- Reset / Retake ---------- */
+// Clears all answers and results, unlocks the form, and restarts the 10-minute timer.
+function resetQuiz() {
+  // Unlock every input and button (they were disabled after submitting).
+  Array.from(form.elements).forEach(function (el) {
+    el.disabled = false;
+  });
+
+  form.reset();                         // clears text boxes, radio buttons, and checkboxes
+
+  // Hide and empty the results area.
+  resultsSection.hidden = true;
+  resultsListEl.innerHTML = "";
+  resultStatusEl.textContent = "";
+  resultStatusEl.className = "";
+  totalScoreEl.textContent = "";
+  timeSpentEl.textContent = "";
+
+  // Restart the timer from the full time limit.
+  clearInterval(timerId);
+  submitted = false;
+  startTime = Date.now();
+  timeLeftEl.textContent = formatTime(TIME_LIMIT_SECONDS);
+  timerId = setInterval(tick, 1000);
+
+  window.scrollTo({ top: 0, behavior: "smooth" });   // back to the top of the quiz
+}
+
+// Both the Reset button (in the form) and the Retake button (in the results) do the same thing.
+document.getElementById("reset-btn").addEventListener("click", resetQuiz);
+document.getElementById("retake-btn").addEventListener("click", resetQuiz);
