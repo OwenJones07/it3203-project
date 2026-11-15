@@ -2,7 +2,7 @@
 
 /* ---------- Settings ---------- */
 // The quiz is limited to 10 minutes, stored in seconds.
-const TIME_LIMIT_SECONDS = 1.5 * 60;
+const TIME_LIMIT_SECONDS = 10 * 60;
 
 // Percent needed to pass.
 const PASS_PERCENT = 70;
