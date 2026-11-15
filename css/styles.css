@@ -1,6 +1,21 @@
-/* IT 3203 Milestone 1 - styles.css: the single stylesheet shared by all six pages */
+/* IT 3203 Milestone 2 - styles.css: the single stylesheet shared by all seven pages.
 
-/* Base styles: sets the font, text color, and page background for the whole site. Margin 0 removes the browser's default gap. */
+   Sections:
+   1. Base styles
+   2. Page layout (header, main, footer)
+   3. Navigation
+   4. Headings and text
+   5. Cards, table of contents, and grid
+   6. Tables
+   7. Images
+   8. Quiz page (timer, questions, form controls, buttons, results)
+   9. Responsive adjustments
+*/
+
+
+/* ========== 1. BASE STYLES ========== */
+
+/* Sets the font, text color, and page background for the whole site. Margin 0 removes the browser's default gap. */
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -8,6 +23,9 @@ body {
   background-color: #f4f6f8;
   margin: 0;
 }
+
+
+/* ========== 2. PAGE LAYOUT ========== */
 
 /* Header: dark blue banner with white centered text. Padding gives the title breathing room. */
 header {
@@ -17,6 +35,13 @@ header {
   text-align: center;
 }
 
+/* Main content: max-width keeps lines readable, and auto side margins center the content on the page. */
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
 /* Footer: matches the header color so the page feels bookended. Holds the class project note. */
 footer {
   background-color: #1f3a5f;
@@ -24,6 +49,9 @@ footer {
   padding: 1rem;
   text-align: center;
 }
+
+
+/* ========== 3. NAVIGATION ========== */
 
 /* Menu layout: flexbox puts the links in one centered row. flex-wrap lets the links drop to a new line on small screens instead of overflowing. Gap spaces them out, and list-style none removes the bullets. */
 nav ul {
@@ -44,8 +72,9 @@ nav a {
   padding: 0.5rem 1rem;
 }
 
-/* Hover effect: link background and text color change when the mouse is over it, so users can see what is clickable. */
-nav a:hover {
+/* Hover and keyboard focus share one style so mouse and keyboard users get the same feedback. */
+nav a:hover,
+nav a:focus {
   background-color: #63b3ed;
   color: #111;
 }
@@ -56,12 +85,8 @@ nav a.active {
   text-decoration: underline;
 }
 
-/* Main content: max-width keeps lines readable, and auto side margins center the content on the page. */
-main {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
+
+/* ========== 4. HEADINGS AND TEXT ========== */
 
 /* Section headings: colored text with a bottom border to separate sections visually. */
 h2 {
@@ -69,6 +94,9 @@ h2 {
   border-bottom: 2px solid #1f3a5f;
   padding-bottom: 0.3rem;
 }
+
+
+/* ========== 5. CARDS, TABLE OF CONTENTS, AND GRID ========== */
 
 /* Card (class selector): white box with a border and rounded corners that groups one concept or idea. */
 .card {
@@ -92,6 +120,9 @@ h2 {
   gap: 1rem;
 }
 
+
+/* ========== 6. TABLES ========== */
+
 /* Tables: border-collapse removes double borders, and width 100% makes the table fill the content area. */
 table {
   border-collapse: collapse;
@@ -111,34 +142,42 @@ th {
   color: white;
 }
 
-/* Images: max-width 100% stops images from overflowing the page, and height auto keeps the proportions. */
+
+/* ========== 7. IMAGES ========== */
+
+/* max-width 100% stops images from overflowing the page, and height auto keeps the proportions. */
 img {
   max-width: 100%;
   height: auto;
 }
 
-/* Small screens: tighter link padding so more links fit per row before wrapping. */
-@media (max-width: 600px) {
-  nav a {
-    display: block;
-    padding: 0.4rem 0.75rem;
-  }
+
+/* ========== 8. QUIZ PAGE ========== */
+
+/* --- Timer --- */
+
+/* Stays visible at the top of the screen while scrolling through the questions. */
+#timer {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #1f3a5f;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 0.6rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
-/* Keyboard focus: matches the hover style so tab navigation is visible. */
-nav a:focus {
-  background-color: #63b3ed;
-  color: #111;
+/* Warning color: quiz.js adds this class when 60 seconds or less remain. */
+#timer.low-time {
+  background-color: #c53030;
 }
 
-/* Quiz: each radio/checkbox option sits on its own line. The fill-in-the-blank labels have a "for" attribute, so :not([for]) skips them and they keep flowing with their text box. */
-.question label:not([for]) {
-  display: block;
-  margin: 0.4rem 0;
-  cursor: pointer;
-}
+/* --- Question cards --- */
 
-/* Quiz: question cards with spacing so questions are easy to tell apart. */
+/* Each question is a white card with spacing so questions are easy to tell apart. */
 .question {
   background-color: white;
   border: 1px solid #ccc;
@@ -147,17 +186,86 @@ nav a:focus {
   padding: 1rem;
 }
 
-/* Results: green for correct/pass, red for incorrect/fail. Color is paired with text so the meaning doesn't depend on color alone. */
-.correct { color: #276749; }
-.incorrect { color: #c53030; }
-.result-item {
-  background-color: white;
-  border: 1px solid #ccc;
-  border-left-width: 6px;
-  border-radius: 8px;
-  margin-bottom: 0.75rem;
-  padding: 0.75rem 1rem;
+/* Legend: styled as a small pill label sitting on the top border of each card. */
+.question legend {
+  background-color: #1f3a5f;
+  color: white;
+  font-weight: bold;
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
 }
-.result-item.correct { border-left-color: #38a169; }
-.result-item.incorrect { border-left-color: #e53e3e; }
-#result-status { font-size: 1.4rem; font-weight: bold; }
+
+/* --- Form controls --- */
+
+/* Radio/checkbox options: each sits on its own line. The fill-in-the-blank labels have a "for" attribute, so :not([for]) skips them and they keep flowing with their text box. */
+.question label:not([for]) {
+  display: block;
+  margin: 0.4rem 0;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Hover: highlights the row so the clickable area is obvious. */
+.question label:not([for]):hover {
+  background-color: #e2e8f0;
+}
+
+/* Fill-in-the-blank text boxes: bordered, rounded, and sized to fit short answers. */
+.question input[type="text"] {
+  width: 12rem;
+  max-width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid #a0aec0;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* Focus: a clear outline so keyboard and mouse users can see which control is active. */
+.question input[type="text"]:focus {
+  outline: none;
+  border-color: #2c5282;
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.5);
+}
+
+/* Radio buttons and checkboxes: larger and tinted to match the site colors. */
+.question input[type="radio"],
+.question input[type="checkbox"] {
+  accent-color: #2c5282;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+/* Locked state after submitting: the "not-allowed" cursor shows the answers can't change. */
+.question input:disabled {
+  cursor: not-allowed;
+}
+
+/* --- Buttons --- */
+
+/* Button row: flexbox with wrapping so the buttons stack on small screens. */
+.quiz-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+/* Shared look for all three quiz buttons. */
+#submit-btn,
+#reset-btn,
+#retake-btn {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Primary actions (Submit, Retake): solid blue. */
+#submit-btn,
+#retake-btn {
+  background-color:

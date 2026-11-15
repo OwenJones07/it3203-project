@@ -92,6 +92,7 @@ function tick() {
   const elapsed = Math.floor((Date.now() - startTime) / 1000);
   const remaining = Math.max(TIME_LIMIT_SECONDS - elapsed, 0);
   timeLeftEl.textContent = formatTime(remaining);
+  document.getElementById("timer").classList.toggle("low-time", remaining <= 60);
 
   if (remaining === 0) {
     submitQuiz();
