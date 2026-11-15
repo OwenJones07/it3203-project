@@ -83,14 +83,58 @@ function formatTime(totalSeconds) {
 function tick() {
   const elapsed = Math.floor((Date.now() - startTime) / 1000);
   const remaining = Math.max(TIME_LIMIT_SECONDS - elapsed, 0);
+  // Percent needed to pass.
+  const PASS_PERCENT = 70;
   timeLeftEl.textContent = formatTime(remaining);
-
+  const resultsSection = document.getElementById("results");
+  const resultStatusEl = document.getElementById("result-status");
+  const totalScoreEl = document.getElementById("total-score");
+  const timeSpentEl = document.getElementById("time-spent");
+  const resultsListEl = document.getElementById("results-list");
   if (remaining === 0) {
     submitQuiz();
   }
 }
 
 timerId = setInterval(tick, 1000);
+
+/* ---------- Grading helpers ---------- */
+
+// Reads what the user entered for one question.
+// Text: the typed string (trimmed, lowercase). Radio: the chosen value or "". Checkboxes: an array of values.
+function getUserAnswer(q) {
+  if (q.type === "text") {
+    return form.elements[q.id].value.trim().toLowerCase();
+  }
+  const checked = form.querySelectorAll('input[name="' + q.id + '"]:checked');
+  if (q.type === "single") {
+    return checked.length > 0 ? checked[0].value : "";
+  }
+  return Array.from(checked).map(function (box) { return box.value; });
+}
+
+// Returns true if the user's answer matches the key.
+function isCorrect(q, userAnswer) {
+  if (q.type === "multi") {
+    // Must pick every correct box and nothing else (all-or-nothing).
+    return userAnswer.length === q.answers.length &&
+           userAnswer.every(function (v) { return q.answers.includes(v); });
+  }
+  return q.answers.includes(userAnswer);
+}
+
+// Builds readable text for what the user picked, for the results screen.
+function describeUserAnswer(q) {
+  if (q.type === "text") {
+    const typed = form.elements[q.id].value.trim();
+    return typed === "" ? "(left blank)" : typed;
+  }
+  const checked = form.querySelectorAll('input[name="' + q.id + '"]:checked');
+  if (checked.length === 0) return "(no answer)";
+  return Array.from(checked).map(function (input) {
+    return input.parentElement.textContent.trim();   // the label text next to the input
+  }).join("; ");
+}
 
 /* ---------- Submitting ---------- */
 function submitQuiz() {
@@ -103,8 +147,51 @@ function submitQuiz() {
     TIME_LIMIT_SECONDS
   );
 
-  // Temporary: Step 5 replaces this with real grading.
-  console.log("Quiz submitted. Time spent:", formatTime(secondsSpent));
+  // Grade every question, 1 point each.
+  let score = 0;
+  resultsListEl.innerHTML = "";   // clear any old results
+
+  questions.forEach(function (q, index) {
+    const correct = isCorrect(q, getUserAnswer(q));
+    if (correct) score++;
+
+    // Build one result card for this question.
+    const item = document.createElement("div");
+    item.className = "result-item " + (correct ? "correct" : "incorrect");
+
+    const heading = document.createElement("strong");
+    heading.textContent = "Question " + (index + 1) + ": " +
+      (correct ? "Correct (1/1)" : "Incorrect (0/1)");
+
+    const yours = document.createElement("p");
+    yours.textContent = "Your answer: " + describeUserAnswer(q);
+
+    const right = document.createElement("p");
+    right.textContent = "Correct answer: " + q.display;
+
+    const why = document.createElement("p");
+    why.textContent = q.explanation;
+
+    item.append(heading, yours, right, why);
+    resultsListEl.appendChild(item);
+  });
+
+  // Overall result.
+  const percent = Math.round((score / questions.length) * 100);
+  const passed = percent >= PASS_PERCENT;
+
+  resultStatusEl.textContent = passed ? "PASS" : "FAIL";
+  resultStatusEl.className = passed ? "correct" : "incorrect";
+  totalScoreEl.textContent = score + " / " + questions.length + " (" + percent + "%)";
+  timeSpentEl.textContent = formatTime(secondsSpent);
+
+  // Lock the inputs so answers can't change after grading (Step 6 unlocks them on reset).
+  Array.from(form.elements).forEach(function (el) {
+    if (el.id !== "reset-btn") el.disabled = true;
+  });
+
+  resultsSection.hidden = false;
+  resultsSection.scrollIntoView({ behavior: "smooth" });
 }
 
 // The form's submit event fires when the Submit button is clicked.

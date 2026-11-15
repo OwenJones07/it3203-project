@@ -130,3 +130,34 @@ nav a:focus {
   background-color: #63b3ed;
   color: #111;
 }
+
+/* Quiz: each radio/checkbox option sits on its own line. The fill-in-the-blank labels have a "for" attribute, so :not([for]) skips them and they keep flowing with their text box. */
+.question label:not([for]) {
+  display: block;
+  margin: 0.4rem 0;
+  cursor: pointer;
+}
+
+/* Quiz: question cards with spacing so questions are easy to tell apart. */
+.question {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+/* Results: green for correct/pass, red for incorrect/fail. Color is paired with text so the meaning doesn't depend on color alone. */
+.correct { color: #276749; }
+.incorrect { color: #c53030; }
+.result-item {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-left-width: 6px;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+.result-item.correct { border-left-color: #38a169; }
+.result-item.incorrect { border-left-color: #e53e3e; }
+#result-status { font-size: 1.4rem; font-weight: bold; }
